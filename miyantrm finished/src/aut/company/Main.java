@@ -20,6 +20,7 @@ public class Main {
         frame.pack();
         frame.setVisible(true);
         MyThread thread=new MyThread();
+        thread.run();
 
     }
 }

@@ -10,25 +10,26 @@ public class SettingPack implements Serializable {
     private String sortBy;
     private String search;
 
-    public SettingPack(String savePath, String lookAndFeel, boolean typeOfDownload,int limitedDownloading,String sortBy) {
+    public SettingPack(String savePath, String lookAndFeel, boolean typeOfDownload, int limitedDownloading, String sortBy) {
         this.savePath = savePath;
         this.lookAndFeel = lookAndFeel;
         this.typeOfDownload = typeOfDownload;
-        this.limitedDownloading=limitedDownloading;
+        this.limitedDownloading = limitedDownloading;
         this.sortBy = sortBy;
-        this.search="";
+        this.search = "";
     }
-    public SettingPack(String savePath, String lookAndFeel, boolean typeOfDownload,int limitedDownloading,String sortBy,String search) {
+
+    public SettingPack(String savePath, String lookAndFeel, boolean typeOfDownload, int limitedDownloading, String sortBy, String search) {
         this.savePath = savePath;
         this.lookAndFeel = lookAndFeel;
         this.typeOfDownload = typeOfDownload;
-        this.limitedDownloading=limitedDownloading;
+        this.limitedDownloading = limitedDownloading;
         this.sortBy = sortBy;
-        this.search=search;
+        this.search = search;
     }
 
     public SettingPack() {
-        this("C:\\Users\\amin_\\Desktop", "Windows", true,0,"name","");
+        this("C:\\Users\\amin_\\Desktop", "Windows", true, 0, "name", "");
     }
 
     public String getSavePath() {

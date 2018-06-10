@@ -1,5 +1,7 @@
 package aut.company;
 
+import aut.company.intenet.MyURLConnection;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
@@ -19,8 +21,6 @@ public class Main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
-        MyThread thread=new MyThread();
-        thread.run();
 
     }
 }

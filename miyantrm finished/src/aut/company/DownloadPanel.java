@@ -1,10 +1,12 @@
 package aut.company;
 
+import aut.company.intenet.MyURLConnection;
+
 import javax.swing.*;
-import javax.swing.event.AncestorListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class DownloadPanel extends JPanel {
     private JPanel finalPanel;
@@ -27,17 +29,18 @@ public class DownloadPanel extends JPanel {
 
     private MyFile myFile;
 
+    private MyURLConnection myURLConnection;
 
     private JTabbedPane jTabbedPane = new JTabbedPane();
 
-    public DownloadPanel(MyFile file) {
+    public DownloadPanel(MyFile file) throws IOException {
         ButtonHandler buttonHandler=new ButtonHandler();
         open.addActionListener(buttonHandler);
         cancel.addActionListener(buttonHandler);
         resume.addActionListener(buttonHandler);
         this.myFile=file;
         finalPanel = new JPanel();
-        progressBar.setValue(55);
+        progressBar.setValue(1);
         cancel.setPreferredSize(new Dimension(20, 20));
         open.setPreferredSize(new Dimension(20, 20));
         resume.setPreferredSize(new Dimension(20, 20));
@@ -139,12 +142,149 @@ public class DownloadPanel extends JPanel {
                 System.out.println("resume");
                 myFile.setStatus("Downloading");
                 status.setText("status :downloading");
+                try {
+                    myURLConnection=new MyURLConnection(myFile);
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+                checkDownloadIsFinish();
             }
+
             checkDownloadIsFinish();
 
         }
     }
+
+    @Override
+    public void paintComponents(Graphics g) {
+        super.paintComponents(g);
+    }
+
     public void setStatus(String s){
         status.setText(s);
+    }
+
+    public void setProgressBarPercent(double percent) {
+        this.progressBar.setValue(((int) percent)*100);
+    }
+
+    public void setFinalPanel(JPanel finalPanel) {
+        this.finalPanel = finalPanel;
+    }
+
+    public JLabel getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(JLabel fileName) {
+        this.fileName = fileName;
+    }
+
+    public JLabel getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(JLabel fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    public JLabel getStatus() {
+        return status;
+    }
+
+    public void setStatus(JLabel status) {
+        this.status = status;
+    }
+
+    public JLabel getSavePath() {
+        return savePath;
+    }
+
+    public void setSavePath(JLabel savePath) {
+        this.savePath = savePath;
+    }
+
+    public JLabel getDateAndTime() {
+        return dateAndTime;
+    }
+
+    public void setDateAndTime(JLabel dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
+
+    public JLabel getURL() {
+        return URL;
+    }
+
+    public void setURL(JLabel URL) {
+        this.URL = URL;
+    }
+
+    public JButton getOpen() {
+        return open;
+    }
+
+    public void setOpen(JButton open) {
+        this.open = open;
+    }
+
+    public JButton getResume() {
+        return resume;
+    }
+
+    public void setResume(JButton resume) {
+        this.resume = resume;
+    }
+
+    public JButton getCancel() {
+        return cancel;
+    }
+
+    public void setCancel(JButton cancel) {
+        this.cancel = cancel;
+    }
+
+    public JProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    public void setProgressBar(JProgressBar progressBar) {
+        this.progressBar = progressBar;
+    }
+
+    public JPanel getPanelDownload() {
+        return panelDownload;
+    }
+
+    public void setPanelDownload(JPanel panelDownload) {
+        this.panelDownload = panelDownload;
+    }
+
+    public JPanel getPanelInformation() {
+        return panelInformation;
+    }
+
+    public void setPanelInformation(JPanel panelInformation) {
+        this.panelInformation = panelInformation;
+    }
+
+    public void setMyFile(MyFile myFile) {
+        this.myFile = myFile;
+    }
+
+    public MyURLConnection getMyURLConnection() {
+        return myURLConnection;
+    }
+
+    public void setMyURLConnection(MyURLConnection myURLConnection) {
+        this.myURLConnection = myURLConnection;
+    }
+
+    public JTabbedPane getjTabbedPane() {
+        return jTabbedPane;
+    }
+
+    public void setjTabbedPane(JTabbedPane jTabbedPane) {
+        this.jTabbedPane = jTabbedPane;
     }
 }

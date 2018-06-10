@@ -2,6 +2,7 @@ package aut.company;
 
 import aut.company.File.ReadFromFile;
 import aut.company.File.WriteToFile;
+import aut.company.intenet.MyURLConnection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 //layout not set!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 public class EventHandlerForAllOption extends JPanel {
@@ -32,6 +35,10 @@ public class EventHandlerForAllOption extends JPanel {
     private ArrayList<MyFile> myFilesStartNow = new ArrayList<>();
     private ArrayList<MyFile> myFilesList = new ArrayList<>();
     private ArrayList<MyFile> myFilesRemoved = new ArrayList<>();
+    private ArrayList<MyURLConnection> myURLConnectionsStartNow=new ArrayList<>();
+    private ArrayList<MyURLConnection> myURLConnectionsAddToQueue=new ArrayList<>();
+
+    MyURLConnection myURLConnectionTmp;
 
 
     public EventHandlerForAllOption() throws IOException, ClassNotFoundException {
@@ -168,15 +175,36 @@ public class EventHandlerForAllOption extends JPanel {
         });
         menuHandler.setResumeDownloadListener(new IResumeDownload() {
             @Override
-            public void resumeDownloadClicked() {
+            public void resumeDownloadClicked() throws IOException, InterruptedException {
                 for (MyFile startNow : myFilesStartNow) {
                     startNow.setStatus("status : downloading");
                     startNow.getDownloadPanel().setStatus("status : downloading");
+                    myURLConnectionTmp=new MyURLConnection(startNow);
+                    myURLConnectionsStartNow.add(myURLConnectionTmp);
                 }
                 for (MyFile addToQueue : myFilesAddToQueues) {
                     addToQueue.setStatus("status : downloading");
                     addToQueue.getDownloadPanel().setStatus("status : downloading");
+                    myURLConnectionTmp=new MyURLConnection(addToQueue);
+                    myURLConnectionsAddToQueue.add(myURLConnectionTmp);
                 }
+                ExecutorService pool = Executors.newFixedThreadPool(myURLConnectionsStartNow.size());
+                for (int i = 0; i <myURLConnectionsStartNow.size() ; i++) {
+                    if (i>settingPackWithChanging.getLimitedDownloading()){
+                        myURLConnectionsStartNow.get(i).sleep(500);
+                        i--;
+                    }else {
+                        pool.execute(myURLConnectionsStartNow.get(i));
+                        pool.shutdown();
+
+                    }
+                }
+                for (int i = 0; i <myURLConnectionsAddToQueue.size() ; i++) {
+                    ExecutorService poolAdd = Executors.newFixedThreadPool(1);
+                    poolAdd.execute(myURLConnectionsAddToQueue.get(i));
+                    poolAdd.shutdown();
+                }
+
             }
         });
         menuHandler.setStopDownloadListener(new IStopDownload() {

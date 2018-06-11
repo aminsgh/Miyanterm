@@ -68,10 +68,12 @@ public class BtnHandler extends JPanel {
                 stopDownloadListener.stopDownloadClicked();
             }
             if (e.getSource().equals(btnGroup.getResume())) {
-                System.out.println("resume");
+                System.out.println("resume1");
                 try {
                     resumeDownloadListener.resumeDownloadClicked();
                 } catch (IOException e1) {
+                    e1.printStackTrace();
+                } catch (InterruptedException e1) {
                     e1.printStackTrace();
                 } catch (ClassNotFoundException e1) {
                     e1.printStackTrace();

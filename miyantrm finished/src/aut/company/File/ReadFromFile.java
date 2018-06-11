@@ -20,6 +20,12 @@ public class ReadFromFile {
 
     }
 
+    /**
+     * reading method
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<MyFile> readingAllDownload() throws IOException, ClassNotFoundException {
 
         FileInputStream fis = new FileInputStream("list.ser");
@@ -34,6 +40,12 @@ public class ReadFromFile {
         return allDownloadArrayList;
     }
 
+    /**
+     * reading method
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<MyFile> readingRemovedDownload() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("remove.ser");
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -47,6 +59,12 @@ public class ReadFromFile {
         return removedArrayList;
     }
 
+    /**
+     * reading method
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<MyFile> readingQueueDownload() throws IOException, ClassNotFoundException {
         FileInputStream fis = new FileInputStream("queue.ser");
         ObjectInputStream ois = new ObjectInputStream(fis);
@@ -61,6 +79,12 @@ public class ReadFromFile {
         return queueArrayList;
     }
 
+    /**
+     * reading method
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public SettingPack readingSettingPack() throws IOException, ClassNotFoundException {
 
         FileInputStream fis = new FileInputStream("setting.ser");
@@ -71,6 +95,12 @@ public class ReadFromFile {
         return settingPack;
     }
 
+    /**
+     * reading method
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     public ArrayList<MyFile> readingStartNowDownload() throws IOException, ClassNotFoundException {
 
         FileInputStream fis = new FileInputStream("start now.ser");

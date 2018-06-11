@@ -61,7 +61,11 @@ public class MenuHandler  {
             }else if (e.getSource().equals(menuBar.getResume())){
                 System.out.println("resume");
                 try {
-                    resumeDownloadListener.resumeDownloadClicked();
+                    try {
+                        resumeDownloadListener.resumeDownloadClicked();
+                    } catch (InterruptedException e1) {
+                        e1.printStackTrace();
+                    }
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 } catch (ClassNotFoundException e1) {

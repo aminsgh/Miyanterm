@@ -12,7 +12,7 @@ import java.net.URL;
 
 public class MyURLConnection extends Thread {
     private URL url;
-    private HttpsURLConnection httpsURLConnection;
+    private HttpURLConnection httpConn;
     private int responseCodeHttp;
     private double downloaded = 0;
     private MyFile myFile;
@@ -24,10 +24,18 @@ public class MyURLConnection extends Thread {
 
     }
 
+    /**
+     * url and connection method
+     * @param fileURL
+     * @param saveDir
+     * @param myFile
+     * @throws IOException
+     * @throws InterruptedException
+     */
     public void HttpDownloadUtility(String fileURL, String saveDir, MyFile myFile) throws IOException, InterruptedException {
 
         URL url = new URL(fileURL);
-        HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+        httpConn = (HttpURLConnection) url.openConnection();
         responseCodeHttp = httpConn.getResponseCode();
 
         // always check HTTP response code first
@@ -67,11 +75,14 @@ public class MyURLConnection extends Thread {
             while ((bytesRead = inputStream.read(buffer)) != -1) {
                 downloaded += bytesRead;
                 outputStream.write(buffer, 0, bytesRead);
-                myFile.getDownloadPanel().setProgressBarPercent(downloaded / contentLength);
+                myFile.getDownloadPanel().setProgressBarPercent(downloaded*100 / contentLength);
+                System.out.println((int)(downloaded*100/contentLength));
                 Thread.sleep(500);
 
             }
             myFile.getDownloadPanel().setStatus("status :finished");
+            myFile.setNameFile(fileName);
+            myFile.setSize(contentLength+"");
             myFile.getDownloadPanel().getFileSize().setText(myFile.getDownloadPanel().getFileSize().getText()+contentLength);
             myFile.getDownloadPanel().getFileName().setText(myFile.getDownloadPanel().getFileName().getText()+fileName);
             myFile.setFinished(true);
@@ -92,7 +103,7 @@ public class MyURLConnection extends Thread {
     @Override
     public void run(){
         try {
-            HttpDownloadUtility("http://zirnevisfa.ir/files/top250/Inglourious%20basterds%202009%20Www.ZirnevisFa.iR.rar", "C:\\Users\\amin_\\Desktop", myFile);
+            HttpDownloadUtility(myFile.getURL(), myFile.getSavePath(), myFile);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (InterruptedException e) {

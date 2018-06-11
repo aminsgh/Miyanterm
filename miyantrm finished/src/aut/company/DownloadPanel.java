@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 
 public class DownloadPanel extends JPanel {
@@ -33,8 +35,15 @@ public class DownloadPanel extends JPanel {
 
     private JTabbedPane jTabbedPane = new JTabbedPane();
 
+    /**
+     * this is constructor
+     * @param file
+     * @throws IOException
+     */
     public DownloadPanel(MyFile file) throws IOException {
         ButtonHandler buttonHandler=new ButtonHandler();
+        MouseHandler mouseHandler=new MouseHandler();
+        jTabbedPane.addMouseListener(mouseHandler);
         open.addActionListener(buttonHandler);
         cancel.addActionListener(buttonHandler);
         resume.addActionListener(buttonHandler);
@@ -104,23 +113,354 @@ public class DownloadPanel extends JPanel {
 
 
     }
+
+    /**
+     * check the download is finished or not
+     */
     public void checkDownloadIsFinish(){
         if (progressBar.getValue()==100){
             myFile.setFinished(true);
         }
     }
 
+    /**
+     *
+     * @return  final panel
+     */
     public JPanel getFinalPanel() {
         return finalPanel;
     }
 
+    /**
+     *
+     * @return myfile of download panel
+     */
     public MyFile getMyFile() {
         return myFile;
     }
 
+    /**
+     *
+     * @return value of progressBar
+     */
     public int getProgressBarPercent() {
         return progressBar.getValue();
     }
+
+    /**
+     * set status
+     * @param s
+     */
+    public void setStatus(String s){
+        status.setText(s);
+    }
+
+    /**
+     * set percent of progressBar
+     * @param percent
+     */
+    public void setProgressBarPercent(double percent) {
+        this.progressBar.setValue(((int) percent));
+    }
+
+    /**
+     *
+     * @param finalPanel
+     */
+    public void setFinalPanel(JPanel finalPanel) {
+        this.finalPanel = finalPanel;
+    }
+
+    /**
+     *
+     *
+     * @return fileName
+     */
+    public JLabel getFileName() {
+        return fileName;
+    }
+
+    /**
+     *
+     * @param fileName
+     */
+    public void setFileName(JLabel fileName) {
+        this.fileName = fileName;
+    }
+
+    /**
+     *
+     * @return fileSize
+     */
+    public JLabel getFileSize() {
+        return fileSize;
+    }
+
+    /**
+     *
+     * @param fileSize
+     */
+    public void setFileSize(JLabel fileSize) {
+        this.fileSize = fileSize;
+    }
+
+    /**
+     *
+     * @return  status
+     */
+    public JLabel getStatus() {
+        return status;
+    }
+
+    /**
+     *
+     *
+     * @param status
+     */
+    public void setStatus(JLabel status) {
+        this.status = status;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JLabel getSavePath() {
+        return savePath;
+    }
+
+    /**
+     *
+     *
+     * @param savePath
+     */
+    public void setSavePath(JLabel savePath) {
+        this.savePath = savePath;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JLabel getDateAndTime() {
+        return dateAndTime;
+    }
+
+    /**
+     *
+     *
+     * @param dateAndTime
+     */
+    public void setDateAndTime(JLabel dateAndTime) {
+        this.dateAndTime = dateAndTime;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JLabel getURL() {
+        return URL;
+    }
+
+    /**
+     *
+     *
+     * @param URL
+     */
+    public void setURL(JLabel URL) {
+        this.URL = URL;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JButton getOpen() {
+        return open;
+    }
+
+    /**
+     *
+     *
+     * @param open
+     */
+    public void setOpen(JButton open) {
+        this.open = open;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JButton getResume() {
+        return resume;
+    }
+
+    /**
+     *
+     *
+     * @param resume
+     */
+    public void setResume(JButton resume) {
+        this.resume = resume;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JButton getCancel() {
+        return cancel;
+    }
+
+    /**
+     *
+     *
+     * @param cancel
+     */
+    public void setCancel(JButton cancel) {
+        this.cancel = cancel;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JProgressBar getProgressBar() {
+        return progressBar;
+    }
+
+    /**
+     *
+     *
+     * @param progressBar
+     */
+    public void setProgressBar(JProgressBar progressBar) {
+        this.progressBar = progressBar;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JPanel getPanelDownload() {
+        return panelDownload;
+    }
+
+    /**
+     *
+     *
+     * @param panelDownload
+     */
+    public void setPanelDownload(JPanel panelDownload) {
+        this.panelDownload = panelDownload;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JPanel getPanelInformation() {
+        return panelInformation;
+    }
+
+    /**
+     *
+     *
+     * @param panelInformation
+     */
+    public void setPanelInformation(JPanel panelInformation) {
+        this.panelInformation = panelInformation;
+    }
+
+    /**
+     *
+     *
+     * @param myFile
+     */
+    public void setMyFile(MyFile myFile) {
+        this.myFile = myFile;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public MyURLConnection getMyURLConnection() {
+        return myURLConnection;
+    }
+
+    /**
+     *
+     *
+     * @param myURLConnection
+     */
+    public void setMyURLConnection(MyURLConnection myURLConnection) {
+        this.myURLConnection = myURLConnection;
+    }
+
+    /**
+     *
+     *
+     * @return
+     */
+    public JTabbedPane getjTabbedPane() {
+        return jTabbedPane;
+    }
+
+    /**
+     *
+     *
+      * @param jTabbedPane
+     */
+    public void setjTabbedPane(JTabbedPane jTabbedPane) {
+        this.jTabbedPane = jTabbedPane;
+    }
+    private class MouseHandler implements MouseListener{
+
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getComponent().equals(jTabbedPane)&&myFile.isFinished()){
+                JOptionPane.showMessageDialog(new JFrame(), myFile.getNameFile());
+
+            }
+        }
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseReleased(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseEntered(MouseEvent e) {
+
+        }
+
+        @Override
+        public void mouseExited(MouseEvent e) {
+
+        }
+    }
+
+    /**
+     * this is private class for listener
+     */
 
     private class ButtonHandler implements ActionListener {
 
@@ -134,16 +474,20 @@ public class DownloadPanel extends JPanel {
             if (e.getSource().equals(cancel)) {
 
                 System.out.println(cancel);
-                    myFile.setStatus("canceled");
-                    status.setText("status :cancel");
-                    myFile.setFinished(true);
+                myFile.setStatus("canceled");
+                status.setText("status :cancel");
+                myFile.setFinished(true);
             }
             if (e.getSource().equals(resume)) {
                 System.out.println("resume");
                 myFile.setStatus("Downloading");
                 status.setText("status :downloading");
                 try {
+                    if (myFile.getTypeOfDownload().equals("start now")){
                     myURLConnection=new MyURLConnection(myFile);
+                    myURLConnection.start();
+                    }
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -155,136 +499,56 @@ public class DownloadPanel extends JPanel {
         }
     }
 
-    @Override
-    public void paintComponents(Graphics g) {
-        super.paintComponents(g);
-    }
-
-    public void setStatus(String s){
-        status.setText(s);
-    }
-
-    public void setProgressBarPercent(double percent) {
-        this.progressBar.setValue(((int) percent)*100);
-    }
-
-    public void setFinalPanel(JPanel finalPanel) {
-        this.finalPanel = finalPanel;
-    }
-
-    public JLabel getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(JLabel fileName) {
-        this.fileName = fileName;
-    }
-
-    public JLabel getFileSize() {
-        return fileSize;
-    }
-
-    public void setFileSize(JLabel fileSize) {
-        this.fileSize = fileSize;
-    }
-
-    public JLabel getStatus() {
-        return status;
-    }
-
-    public void setStatus(JLabel status) {
-        this.status = status;
-    }
-
-    public JLabel getSavePath() {
-        return savePath;
-    }
-
-    public void setSavePath(JLabel savePath) {
-        this.savePath = savePath;
-    }
-
-    public JLabel getDateAndTime() {
-        return dateAndTime;
-    }
-
-    public void setDateAndTime(JLabel dateAndTime) {
-        this.dateAndTime = dateAndTime;
-    }
-
-    public JLabel getURL() {
-        return URL;
-    }
-
-    public void setURL(JLabel URL) {
-        this.URL = URL;
-    }
-
-    public JButton getOpen() {
-        return open;
-    }
-
-    public void setOpen(JButton open) {
-        this.open = open;
-    }
-
-    public JButton getResume() {
-        return resume;
-    }
-
-    public void setResume(JButton resume) {
-        this.resume = resume;
-    }
-
-    public JButton getCancel() {
-        return cancel;
-    }
-
-    public void setCancel(JButton cancel) {
-        this.cancel = cancel;
-    }
-
-    public JProgressBar getProgressBar() {
-        return progressBar;
-    }
-
-    public void setProgressBar(JProgressBar progressBar) {
-        this.progressBar = progressBar;
-    }
-
-    public JPanel getPanelDownload() {
-        return panelDownload;
-    }
-
-    public void setPanelDownload(JPanel panelDownload) {
-        this.panelDownload = panelDownload;
-    }
-
-    public JPanel getPanelInformation() {
-        return panelInformation;
-    }
-
-    public void setPanelInformation(JPanel panelInformation) {
-        this.panelInformation = panelInformation;
-    }
-
-    public void setMyFile(MyFile myFile) {
-        this.myFile = myFile;
-    }
-
-    public MyURLConnection getMyURLConnection() {
-        return myURLConnection;
-    }
-
-    public void setMyURLConnection(MyURLConnection myURLConnection) {
-        this.myURLConnection = myURLConnection;
-    }
-
-    public JTabbedPane getjTabbedPane() {
-        return jTabbedPane;
-    }
-
-    public void setjTabbedPane(JTabbedPane jTabbedPane) {
-        this.jTabbedPane = jTabbedPane;
-    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

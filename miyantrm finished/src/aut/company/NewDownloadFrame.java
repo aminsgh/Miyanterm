@@ -16,7 +16,7 @@ public class NewDownloadFrame extends JFrame {
     private String statue;
 
     private JLabel labelURL = new JLabel("Download URL :");
-    private JTextField textFieldURL = new JTextField(30);
+    private JTextField textFieldURL = new JTextField(50);
     private JLabel labelSave = new JLabel("Save directory :");
     private JTextField textFieldSave = new JTextField(30);
     private JLabel labelFileName = new JLabel("File name :");
@@ -104,7 +104,7 @@ public class NewDownloadFrame extends JFrame {
         constraints.weightx = 1.0;
         add(download, constraints);
 
-
+        setTitle("new download");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setVisible(true);
@@ -126,6 +126,7 @@ public class NewDownloadFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if (e.getSource().equals(download)) {
                 file = new MyFile(textFieldURL.getText(), textFieldFileName.getText(), pathSavedFile, textFieldFileSize.getText(),typeOfDownload);
+                file.setURL(textFieldURL.getText());
                 statue=typeOfDownload;
                 file.setLookAndFeel(lookAndFeel);
                 file.setStatus(statue);

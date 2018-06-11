@@ -40,6 +40,12 @@ public class EventHandlerForAllOption extends JPanel {
 
     MyURLConnection myURLConnectionTmp;
 
+    /**
+     * this is constructor
+     * handel all custom listener
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
 
     public EventHandlerForAllOption() throws IOException, ClassNotFoundException {
         scrollBar = new JScrollBar();
@@ -330,6 +336,9 @@ public class EventHandlerForAllOption extends JPanel {
 
     }
 
+    /**
+     * download set array method
+     */
     public void newDownloadFileAdd() {
         NewDownloadFrame newDownloadFrame = new NewDownloadFrame(settingPackWithChanging);
         newDownloadFrame.setEventListener(new IDownloadingBtn() {
@@ -342,8 +351,11 @@ public class EventHandlerForAllOption extends JPanel {
                     if (settingPackWithChanging.getLimitedDownloading() == 0 || settingPackWithChanging.getLimitedDownloading() > myFilesStartNow.size()) {
                         downloadPanel.getMyFile().setStatus("downloading");
                         myFilesStartNow.add(downloadPanel.getMyFile());
+
                     } else {
                         JOptionPane.showMessageDialog(new JFrame(), "your downloading is limited is over");
+                        downloadPanel.getMyFile().setStatus("waiting");
+                        myFilesStartNow.add(downloadPanel.getMyFile());
                     }
 
                     writeToFile.writingStartNowDownload(myFilesStartNow);
@@ -361,6 +373,10 @@ public class EventHandlerForAllOption extends JPanel {
 
     }
 
+    /**
+     * paint component override method
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -435,6 +451,10 @@ public class EventHandlerForAllOption extends JPanel {
         }
     }
 
+    /**
+     * set sort array list
+     * @return
+     */
     public ArrayList<MyFile> sortNameMyFileStartNow() {
         ArrayList<MyFile> nameSort = new ArrayList<>();
         nameSort.addAll(myFilesList);
@@ -454,6 +474,10 @@ public class EventHandlerForAllOption extends JPanel {
         return nameSort;
     }
 
+    /**
+     * set sort array list
+     * @return
+     */
     public ArrayList<MyFile> sortDateAndTimeMyFileStartNow() {
         ArrayList<MyFile> dateSort = new ArrayList<>();
         dateSort.addAll(myFilesList);
@@ -473,6 +497,10 @@ public class EventHandlerForAllOption extends JPanel {
         return dateSort;
     }
 
+    /**
+     * set sort array list
+     * @return int type for show
+     */
     public ArrayList<MyFile> sortSizeMyFileStartNow() {
         ArrayList<MyFile> sizeSort = new ArrayList<>();
         sizeSort.addAll(myFilesList);
@@ -492,6 +520,10 @@ public class EventHandlerForAllOption extends JPanel {
         return sizeSort;
     }
 
+    /**
+     * set sort array list
+     * @return
+     */
     public ArrayList<MyFile> searching() {
         ArrayList<MyFile> searchArrayList = new ArrayList<>();
         for (MyFile myFile : myFilesList) {
